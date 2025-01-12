@@ -12,4 +12,3 @@ services:
       - POSTGRES_PASSWORD=${postgres_password}
       - POSTGRES_USER=postgres
       - POSTGRES_DB=default
-    

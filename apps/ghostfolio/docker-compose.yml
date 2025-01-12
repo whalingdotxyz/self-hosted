@@ -1,0 +1,32 @@
+---
+name: ghostfolio
+services:
+  ghostfolio:
+    image: docker.io/ghostfolio/ghostfolio:latest
+    container_name: ghostfolio
+    restart: unless-stopped
+    init: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      - POSTGRES_DB=ghostfolio
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=${postgres_password}
+      - DATABASE_URL=postgresql://postgres:${postgres_password}@${db_host}:5432/ghostfolio?sslmode=prefer
+      # Redis environment variables
+      - REDIS_HOST=${db_host}
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${redis_password}
+      - ACCESS_TOKEN_SALT=${gf_access_token}
+      - JWT_SECRET_KEY=${gf_jwt_secret}
+    volumes:
+      - "${path_to_ghostfolio_config}/ghostfolio/"
+    ports:
+      - 3333:3333
+    healthcheck:
+      test: ['CMD-SHELL', 'curl -f http://localhost:3333/api/v1/health']
+      interval: 10s
+      timeout: 5s
+      retries: 5

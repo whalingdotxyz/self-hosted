@@ -10,14 +10,12 @@
         state: present
       when: ansible_os_family == "Debian"
       
-    - name: Clone the home-server repository using SSH
+    - name: Clone the self-hosted repository using SSH
       git:
-        repo: 'git@github.com:{{git_username}}/home-server.git'
-        dest: /home/{{ ansible_user }}/git/home-server
+        repo: 'https://github.com:{{git_username}}/self-hosted.git'
+        dest: /home/{{ ansible_user }}/git/self-hosted
         update: yes
       become_user: "{{ ansible_user }}"
-      environment:
-        GIT_SSH_COMMAND: "ssh -i {{ git_ssh_private_key_file }}"
 
     - name: Set up Postgres configuration directory and run Docker Compose
       block:
@@ -36,7 +34,7 @@
         - name: Run Docker Compose to deploy Postgres
           shell: docker compose up -d
           args:
-            chdir: /home/{{ ansible_user }}/git/home-server/apps/postgres
+            chdir: /home/{{ ansible_user }}/git/self-hosted/apps/postgres
           environment:
             path_to_postgres_config: "{{ lookup('env', 'path_to_postgres_config') }}"
             postgres_password: "{{ lookup('env', 'postgres_password') }}"

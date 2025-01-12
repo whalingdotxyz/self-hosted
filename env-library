@@ -1,3 +1,7 @@
+        #Ansible Variables
+        git_username #set Wail1ng if you want to target the original repo
+        ansible_user #name of the user used to log into your server
+        
         #path to directories
         path_to_media: "{{ lookup('env', 'path_to_media') }}"
         path_to_data: "{{ lookup('env', 'path_to_data') }}"

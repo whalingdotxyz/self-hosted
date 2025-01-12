@@ -16,8 +16,6 @@
         dest: /home/{{ ansible_user }}/git/home-server
         update: yes
       become_user: "{{ ansible_user }}"
-      environment:
-        GIT_SSH_COMMAND: "ssh -i {{ git_ssh_private_key_file }}"
 
     - name: Set up Open WebUI configuration directory and run Docker Compose
       block:

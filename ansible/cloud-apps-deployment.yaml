@@ -109,7 +109,7 @@
 
         - name: Check if the Nextcloud database exists
           shell: |
-            docker exec -u postgres postgres psql -U postgres -tc "SELECT 1 FROM pg_database WHERE datname = 'nextcloud';" | grep -q 1
+            docker exec -u postgres postgres psql -U postgres -tc "SELECT 1 FROM pg_database WHERE datname = 'nextcloud';" || echo "Database not found"
           register: db_check
           changed_when: false
 
@@ -195,7 +195,7 @@
 
         - name: Check if the Ghostfolio database exists
           shell: |
-            docker exec -u postgres postgres psql -U postgres -tc "SELECT 1 FROM pg_database WHERE datname = 'ghostfolio';" | grep -q 1
+            docker exec -u postgres postgres psql -U postgres -tc "SELECT 1 FROM pg_database WHERE datname = 'ghostfolio';" || echo "Database not found"
           register: db_check
           changed_when: false
          

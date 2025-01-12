@@ -1,0 +1,179 @@
+---
+- name: Deploy media-center apps using Docker Compose
+  hosts: all
+  become: yes
+
+  tasks:
+
+    - name: Ensure Git is installed
+      apt:
+        name: git
+        state: present
+      when: ansible_os_family == "Debian"
+      
+    - name: Clone the self-hosted repository using SSH
+      git:
+        repo: 'https://github.com:{{git_username}}/self-hosted.git'
+        dest: /home/{{ ansible_user }}/git/self-hosted
+        update: yes
+      become_user: "{{ ansible_user }}"
+      environment:
+        GIT_SSH_COMMAND: "ssh -i {{ git_ssh_private_key_file }}"
+
+    - name: Set up and deploy Jellyfin with Docker Compose
+      block:
+        - name: Create directories for all path_to_xxx variables
+          ansible.builtin.file:
+            path: "{{ item }}"
+            state: directory
+            mode: '0755'
+            recurse: yes
+          loop:
+            - "{{ path_to_jellyfin_config }}"
+            - "{{ path_to_media }}"
+          when: path_to_jellyfin_config is defined and path_to_media is defined
+
+        - name: Run Docker Compose to deploy Jellyfin
+          shell: docker compose up -d
+          args:
+            chdir: /home/{{ ansible_user }}/git/self-hosted/apps/jellyfin
+          environment:
+            path_to_jellyfin_config: "{{ lookup('env', 'path_to_jellyfin_config') }}"
+            path_to_media: "{{ lookup('env', 'path_to_media') }}"   
+          become_user: "{{ ansible_user }}"
+
+    - name: Set up and deploy Radarr with Docker Compose
+      block:
+        - name: Create directories for all path_to_xxx variables
+          ansible.builtin.file:
+            path: "{{ item }}"
+            state: directory
+            mode: '0755'
+            recurse: yes
+          loop:
+            - "{{ path_to_radarr_config }}"
+            - "{{ path_to_downloads }}"
+            - "{{ path_to_movies }}"
+          when: path_to_radarr_config is defined and path_to_downloads is defined and path_to_movies is defined
+
+        - name: Run Docker Compose to deploy Radarr
+          shell: docker compose up -d
+          args:
+            chdir: /home/{{ ansible_user }}/git/self-hosted/apps/radarr
+          environment:
+            path_to_radarr_config: "{{ lookup('env', 'path_to_radarr_config') }}"
+            path_to_downloads: "{{ lookup('env', 'path_to_downloads') }}"  
+            path_to_movies: "{{ lookup('env', 'path_to_movies') }}" 
+          become_user: "{{ ansible_user }}"
+
+    - name: Set up and deploy Sonarr with Docker Compose
+      block:
+        - name: Create directories for all path_to_xxx variables
+          ansible.builtin.file:
+            path: "{{ item }}"
+            state: directory
+            mode: '0755'
+            recurse: yes
+          loop:
+            - "{{ path_to_sonarr_config }}"
+            - "{{ path_to_downloads }}"
+            - "{{ path_to_tvshows }}"
+          when: path_to_sonarr_config is defined and path_to_downloads is defined and path_to_tvshows is defined
+
+        - name: Run Docker Compose to deploy Sonarr
+          shell: docker compose up -d
+          args:
+            chdir: /home/{{ ansible_user }}/git/self-hosted/apps/sonarr
+          environment:
+            path_to_sonarr_config: "{{ lookup('env', 'path_to_sonarr_config') }}"
+            path_to_downloads: "{{ lookup('env', 'path_to_downloads') }}"  
+            path_to_tvshows: "{{ lookup('env', 'path_to_tvshows') }}" 
+          become_user: "{{ ansible_user }}"
+
+    - name: Set up and deploy Prowlarr with Docker Compose
+      block:
+        - name: Create directories for all path_to_xxx variables
+          ansible.builtin.file:
+            path: "{{ item }}"
+            state: directory
+            mode: '0755'
+            recurse: yes
+          loop:
+            - "{{ path_to_prowlarr_config }}"
+          when: path_to_prowlarr_config is defined
+
+        - name: Run Docker Compose to deploy Prowlarr
+          shell: docker compose up -d
+          args:
+            chdir: /home/{{ ansible_user }}/git/self-hosted/apps/prowlarr
+          environment:
+            path_to_prowlarr_config: "{{ lookup('env', 'path_to_prowlarr_config') }}"
+          become_user: "{{ ansible_user }}"
+
+    - name: Set up and deploy Bazarr with Docker Compose
+      block:
+        - name: Create directories for all path_to_xxx variables
+          ansible.builtin.file:
+            path: "{{ item }}"
+            state: directory
+            mode: '0755'
+            recurse: yes
+          loop:
+            - "{{ path_to_bazarr_config }}"
+            - "{{ path_to_tvshows }}"
+            - "{{ path_to_movies }}"
+          when: path_to_bazarr_config is defined and path_to_tvshows is defined and path_to_movies is defined
+
+        - name: Run Docker Compose to deploy Bazarr
+          shell: docker compose up -d
+          args:
+            chdir: /home/{{ ansible_user }}/git/self-hosted/apps/bazarr
+          environment:
+            path_to_bazarr_config: "{{ lookup('env', 'path_to_bazarr_config') }}"
+            path_to_tvshows: "{{ lookup('env', 'path_to_tvshows') }}" 
+            path_to_movies: "{{ lookup('env', 'path_to_movies') }}" 
+          become_user: "{{ ansible_user }}"
+
+    - name: Set up and deploy Jellyseerr with Docker Compose
+      block:
+        - name: Create directories for all path_to_xxx variables
+          ansible.builtin.file:
+            path: "{{ item }}"
+            state: directory
+            mode: '0755'
+            recurse: yes
+          loop:
+            - "{{ path_to_jellyseerr_config }}"
+          when: path_to_jellyseerr_config is defined
+
+        - name: Run Docker Compose to deploy Jellyseerr
+          shell: docker compose up -d
+          args:
+            chdir: /home/{{ ansible_user }}/git/self-hosted/apps/jellyseerr
+          environment:
+            path_to_jellyseerr_config: "{{ lookup('env', 'path_to_jellyseerr_config') }}"
+          become_user: "{{ ansible_user }}"
+
+    - name: Set up and deploy Transmission with Docker Compose
+      block:
+        - name: Create directories for all path_to_xxx variables
+          ansible.builtin.file:
+            path: "{{ item }}"
+            state: directory
+            mode: '0755'
+            recurse: yes
+          loop:
+            - "{{ path_to_transmission_config }}"
+            - "{{ path_to_downloads }}"
+          when: path_to_transmission_config is defined and path_to_downloads is defined
+
+        - name: Run Docker Compose to deploy Transmission
+          shell: docker compose up -d
+          args:
+            chdir: /home/{{ ansible_user }}/git/self-hosted/apps/transmission
+          environment:
+            path_to_transmission_config: "{{ lookup('env', 'path_to_transmission_config') }}"
+            path_to_downloads: "{{ lookup('env', 'path_to_downloads') }}" 
+            username: "{{ lookup('env', 'username') }}"
+            password: "{{ lookup('env', 'password')}}"
+          become_user: "{{ ansible_user }}"

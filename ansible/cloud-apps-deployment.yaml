@@ -1,0 +1,117 @@
+- name: Deploy cloud apps using Docker Compose
+  hosts: all
+  become: yes
+
+  tasks:
+    
+    - name: Ensure Git is installed
+      apt:
+        name: git
+        state: present
+      when: ansible_os_family == "Debian"
+      
+    - name: Clone the home-server repository using SSH
+      git:
+        repo: 'git@github.com:{{git_username}}/home-server.git'
+        dest: /home/{{ ansible_user }}/git/home-server
+        update: yes
+      become_user: "{{ ansible_user }}"
+      environment:
+        GIT_SSH_COMMAND: "ssh -i {{ git_ssh_private_key_file }}"
+
+    - name: Set up Open WebUI configuration directory and run Docker Compose
+      block:
+        - name: Create directories for Open WebUI
+          ansible.builtin.file:
+            path: "{{ item }}"
+            state: directory
+            mode: '0755'
+            recurse: yes
+            owner: "{{ ansible_user }}"
+            group: "{{ ansible_user }}"              
+          loop:
+            - "{{ path_to_open_webui_config }}"
+          when: path_to_open_webui_config is defined
+
+        - name: Run Docker Compose to deploy Open WebUI
+          shell: docker compose up -d
+          args:
+            chdir: /home/{{ ansible_user }}/git/home-server/apps/open-webui
+          environment:
+            path_to_open_webui_config: "{{ lookup('env', 'path_to_open_webui_config') }}"
+            openai_api_key: "{{ lookup('env', 'openai_api_key') }}"
+          become_user: "{{ ansible_user }}"
+
+    - name: Set up Nextcloud configuration directory and run Docker Compose
+      block:
+        - name: Create directories for Nextcloud
+          ansible.builtin.file:
+            path: "{{ item }}"
+            state: directory
+            mode: '0755'
+            recurse: yes
+            owner: "{{ ansible_user }}"
+            group: "{{ ansible_user }}"              
+          loop:
+            - "{{ path_to_nextcloud_config }}"
+            - "{{ path_to_nextcloud_data }}"
+          when: path_to_nextcloud_config is defined and path_to_nextcloud_data is defined
+
+        - name: Run Docker Compose to deploy Nextcloud
+          shell: docker compose up -d
+          args:
+            chdir: /home/{{ ansible_user }}/git/home-server/apps/nextcloud
+          environment:
+            nextcloud_trusted_domains: "{{ lookup('env', 'nextcloud_trusted_domains') }}"           
+            path_to_nextcloud_config: "{{ lookup('env', 'path_to_nextcloud_config') }}"
+            path_to_nextcloud_data: "{{ lookup('env', 'path_to_nextcloud_data') }}"
+          become_user: "{{ ansible_user }}"
+
+    - name: Set up Only-Office configuration directory and run Docker Compose
+      block:
+        - name: Create directories for Only-Office
+          ansible.builtin.file:
+            path: "{{ item }}"
+            state: directory
+            mode: '0755'
+            recurse: yes 
+            owner: "{{ ansible_user }}"
+            group: "{{ ansible_user }}"            
+          loop:
+            - "{{ path_to_only_office }}"
+          when: path_to_only_office is defined
+
+        - name: Run Docker Compose to deploy Only-Office
+          shell: docker compose up -d
+          args:
+            chdir: /home/{{ ansible_user }}/git/home-server/apps/only-office
+          environment:
+            path_to_onlyoffice: "{{ lookup('env', 'path_to_only_office') }}"           
+          become_user: "{{ ansible_user }}"
+
+    - name: Set up Duplicati configuration directory and run Docker Compose
+      block:
+        - name: Create directories for Duplicati
+          ansible.builtin.file:
+            path: "{{ item }}"
+            state: directory
+            mode: '0755'
+            recurse: yes  
+            owner: "{{ ansible_user }}"
+            group: "{{ ansible_user }}"            
+          loop:
+            - "{{ path_to_duplicati_config }}"
+          when: path_to_duplicati_config is defined
+
+        - name: Run Docker Compose to deploy Duplicati
+          shell: docker compose up -d
+          args:
+            chdir: /home/{{ ansible_user }}/git/home-server/apps/duplicati
+          environment:
+            path_to_duplicati_config: "{{ lookup('env', 'path_to_duplicati_config') }}" 
+            duplicati_encryption_key: "{{ lookup('env', 'duplicati_encryption_key') }}" 
+            path_to_media: "{{ lookup('env', 'path_to_media') }}"
+            path_to_data: "{{ lookup('env', 'path_to_data') }}"
+            path_to_apps: "{{ lookup('env', 'path_to_apps') }}"    
+            password: "{{ lookup('env', 'password') }}"  
+          become_user: "{{ ansible_user }}"

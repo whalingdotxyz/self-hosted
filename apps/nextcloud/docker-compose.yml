@@ -1,0 +1,16 @@
+---
+services:
+  nextcloud:
+    image: lscr.io/linuxserver/nextcloud:latest
+    container_name: nextcloud
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - NEXTCLOUD_TRUSTED_DOMAINS=cloud.wailing.cc, localhost
+    volumes:
+      - "${path_to_nextcloud_config}:/config"
+      - "${path_to_nextcloud_data}:/data"
+    ports:
+      - 4443:443
+    restart: unless-stopped

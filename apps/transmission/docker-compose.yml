@@ -1,0 +1,20 @@
+---
+services:
+  transmission:
+    image: lscr.io/linuxserver/transmission:latest
+    container_name: transmission
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - USER=${username}
+      - PASS=${password}
+    volumes:
+      - "${path_to_transmission_config}:/config"
+      - "${path_to_downloads}:/downloads"
+      - "${path_to_downloads}/watch:/watch"
+    ports:
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+    restart: unless-stopped

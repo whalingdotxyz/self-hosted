@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    environment:
+      - OPENAI_API_KEY=${openai_api_key}  # Use environment variable for the API key
+    volumes:
+      - "${path_to_open_webui_config}:/app/backend/data"  # Map host path to container path
+    ports:
+      - "3000:8080"  # Map port 3000 on host to port 8080 in the container
+    restart: always

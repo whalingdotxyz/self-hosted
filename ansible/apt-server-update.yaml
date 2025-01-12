@@ -1,0 +1,17 @@
+---
+- name: Update and upgrade Apt server
+  hosts: all
+  become: true  # Use sudo to perform system-level changes
+  tasks:
+    - name: Update apt package list
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Upgrade all packages
+      ansible.builtin.apt:
+        upgrade: dist  # Full upgrade to include new packages, remove old ones
+
+    - name: Remove unnecessary packages
+      ansible.builtin.apt:
+        autoremove: yes
+        autoclean: yes

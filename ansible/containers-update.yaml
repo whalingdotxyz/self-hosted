@@ -1,0 +1,89 @@
+---
+- name: Update running containers using Docker Compose
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Ensure Git is installed
+      apt:
+        name: git
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Clone the self-hosted repository using https
+      git:
+        repo: 'https://github.com:{{ git_username }}/self-hosted.git'
+        dest: /home/{{ ansible_user }}/git/self-hosted
+        update: yes
+      become_user: "{{ ansible_user }}"
+
+    # Get a list of all running container names
+    - name: Get running containers
+      shell: |
+        docker ps --filter "status=running" --format "{{ '{{.Names}}' }}" | awk -F'_' '{print $NF}'
+      register: running_containers
+      become: yes
+
+    - name: Update Docker container if running
+      shell: |
+        cd /home/{{ ansible_user }}/git/self-hosted/apps/{{ item }} && \
+        docker compose pull && \
+        docker compose up -d
+      args:
+        chdir: /home/{{ ansible_user }}/git/self-hosted/apps/{{ item }}
+      environment: 
+        #path to directories
+        path_to_media: "{{ lookup('env', 'path_to_media') }}"
+        path_to_data: "{{ lookup('env', 'path_to_data') }}"
+        path_to_apps: "{{ lookup('env', 'path_to_apps') }}"
+        path_to_downloads: "{{ lookup('env', 'path_to_downloads') }}"
+        path_to_tvshows: "{{ lookup('env', 'path_to_tvshows') }}"
+        path_to_movies: "{{ lookup('env', 'path_to_movies') }}"
+
+        #bazzar config
+        path_to_bazarr_config: "{{ lookup('env', 'path_to_bazarr_config') }}"
+
+        #prowlarr config
+        path_to_prowlarr_config: "{{ lookup('env', 'path_to_prowlarr_config') }}"
+
+        #sonarr config
+        path_to_sonarr_config: "{{ lookup('env', 'path_to_sonarr_config') }}"
+
+        #radarr config
+        path_to_radarr_config: "{{ lookup('env', 'path_to_radarr_config') }}"
+
+        #jellyfin config
+        path_to_jellyfin_config: "{{ lookup('env', 'path_to_jellyfin_config') }}"
+
+        #jellyseer config
+        path_to_jellyseerr_config: "{{ lookup('env', 'path_to_jellyseerr_config') }}"
+
+        #transmission config
+        path_to_transmission_config: "{{ lookup('env', 'path_to_transmission_config') }}"
+        username: "{{ lookup('env', 'username') }}"
+        password: "{{ lookup('env', 'password') }}"
+
+        #open-webui config
+        path_to_openw_webui_config: "{{ lookup('env', 'path_to_open_webui_config') }}"
+        openai_api_key: "{{ lookup('env', 'openai_api_key') }}"
+
+        #nextcloud config
+        path_to_nextcloud_config: "{{ lookup('env', 'path_to_nextcloud_config') }}"
+        path_to_nextcloud_data: "{{ lookup('env', 'path_to_nextcloud_data') }}"
+        nextcloud_trusted_domains: "{{ lookup('env', 'nextcloud_trusted_domains') }}"
+        nextcloud_overwritehost: "{{ lookup('env', 'nextcloud_overwritehost') }}"
+
+        #only-office config
+        path_to_only_office: "{{ lookup('env', 'path_to_only_office') }}"
+
+        #duplicati config
+        path_to_duplicati_config: "{{ lookup('env', 'path_to_duplicati_config') }}"
+        duplicati_encryption_key: "{{ lookup('env', 'duplicati_encryption_key') }}" 
+        
+      become_user: "{{ ansible_user }}"
+      loop: "{{ running_containers.stdout_lines }}"
+
+    # Remove orphaned containers and volumes
+    - name: Clean up unused Docker resources (volumes, networks)
+      shell: docker system prune -f --volumes
+      become: yes

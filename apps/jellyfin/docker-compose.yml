@@ -1,0 +1,20 @@
+---
+services:
+  jellyfin:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    group_add:
+      - "993" # "getent group render | cut -d: -f3" to id render group
+    volumes:
+      - "${path_to_jellyfin_config}:/config"
+      - "${path_to_media}:/media"
+
+    ports:
+      - 8096:8096
+    devices:
+      - /dev/dri/renderD128:/dev/dri/renderD128
+    restart: unless-stopped

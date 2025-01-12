@@ -1,0 +1,15 @@
+---
+services:
+  onlyoffice-document-server:
+    image: onlyoffice/documentserver
+    container_name: only-office
+    environment:
+      - DOCS_DATA=$path_to_only_office
+    ports:
+      - "8081:80"
+    volumes:
+      - /app/onlyoffice/DocumentServer/logs:/var/log/onlyoffice
+      - /app/onlyoffice/DocumentServer/data:/var/www/onlyoffice/Data
+      - /app/onlyoffice/DocumentServer/lib:/var/lib/onlyoffice
+      - /app/onlyoffice/DocumentServer/db:/var/lib/postgresql
+    restart: always

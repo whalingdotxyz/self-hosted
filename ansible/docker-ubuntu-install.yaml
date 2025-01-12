@@ -1,0 +1,55 @@
+---
+- name: Install Docker on Ubuntu
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Remove any existing Docker repository entries
+      file:
+        path: /etc/apt/sources.list.d/download_docker_com_linux_ubuntu.list
+        state: absent
+      ignore_errors: yes  # Ignore error if the file doesn't exist
+
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+        keyring: /etc/apt/keyrings/docker.asc
+
+    - name: Get Ubuntu release codename
+      command: lsb_release -cs
+      register: lsb_release_result
+
+    - name: Add Docker repository
+      apt_repository:
+        repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu {{ lsb_release_result.stdout }} stable"
+        state: present
+
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install Docker packages
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        state: latest
+
+    - name: Install Docker Compose (via apt)
+      apt:
+        name: docker-compose
+        state: latest
+
+    - name: Add user to docker group
+      user:
+        name: "{{ ansible_user }}"
+        group: docker
+
+    - name: Log out and rejoin docker group
+      command: newgrp docker
+      when: ansible_user_id != "root"

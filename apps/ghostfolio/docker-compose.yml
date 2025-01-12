@@ -21,8 +21,6 @@ services:
       - REDIS_PASSWORD=${redis_password}
       - ACCESS_TOKEN_SALT=${gf_access_token}
       - JWT_SECRET_KEY=${gf_jwt_secret}
-    volumes:
-      - "${path_to_ghostfolio_config}:/ghostfolio"
     ports:
       - 3333:3333
     healthcheck:

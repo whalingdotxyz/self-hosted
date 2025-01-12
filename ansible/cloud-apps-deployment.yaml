@@ -37,6 +37,11 @@
             path_to_postgres_config: "{{ lookup('env', 'path_to_postgres_config') }}"
             postgres_password: "{{ lookup('env', 'postgres_password') }}"
           become_user: "{{ ansible_user }}"
+          register: docker_compose_output
+
+      - name: Show docker compose output for Postgres
+        debug:
+          var: docker_compose_output.stdout         
 
     - name: Set up Open WebUI configuration directory and run Docker Compose
       block:

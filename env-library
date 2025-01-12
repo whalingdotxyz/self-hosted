@@ -49,3 +49,7 @@
         #duplicati config
         path_to_duplicati_config: "{{ lookup('env', 'path_to_duplicati_config') }}"
         duplicati_encryption_key: "{{ lookup('env', 'duplicati_encryption_key') }}" 
+
+        #postgres config
+        path_to_postgres_config: "{{ lookup('env', 'path_to_postgres_config') }}"
+        postgres_password: "{{ lookup('env', 'postgres_password') }}"

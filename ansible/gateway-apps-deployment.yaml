@@ -1,4 +1,5 @@
-- name: Deploy cloud apps using Docker Compose
+---
+- name: Deploy gateway apps using Docker Compose
   hosts: all
   become: yes
 
@@ -17,16 +18,14 @@
         update: yes
       become_user: "{{ ansible_user }}"
 
-    - name: Set up Postgres configuration directory and run Docker Compose
+    - name: Set up and deploy Postgres with Docker Compose
       block:
         - name: Create directories for Postgres
           ansible.builtin.file:
             path: "{{ item }}"
             state: directory
             mode: '0755'
-            recurse: yes
-            owner: "{{ ansible_user }}"
-            group: "{{ ansible_user }}"              
+            recurse: yes            
           loop:
             - "{{ path_to_postgres_config }}"
           when: path_to_postgres_config is defined

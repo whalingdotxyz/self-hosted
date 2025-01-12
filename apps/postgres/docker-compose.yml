@@ -7,6 +7,8 @@ services:
     volumes:
       - ~/apps/postgres:/var/lib/postgresql/data
     environment:
+      - PUID=1000
+      - PGID=1000
       - POSTGRES_PASSWORD=${postgres_password}
       - POSTGRES_USER=postgres
       - POSTGRES_DB=default

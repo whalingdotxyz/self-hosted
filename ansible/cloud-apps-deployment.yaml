@@ -110,6 +110,8 @@
         - name: Create the Nextcloud database in PostgreSQL
           shell: |
             docker exec -u postgres postgres psql -U postgres -c "CREATE DATABASE nextcloud;"
+          when: db_check.rc != 0  # Only create the database if it doesn't exist
+          
         - name: Check if the Nextcloud database exists
           shell: |
             docker exec -u postgres postgres psql -U postgres -tc "SELECT 1 FROM pg_database WHERE datname = 'nextcloud';" | grep -q 1

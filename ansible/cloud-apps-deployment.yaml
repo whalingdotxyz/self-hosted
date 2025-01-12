@@ -17,6 +17,27 @@
         update: yes
       become_user: "{{ ansible_user }}"
 
+    - name: Set up and deploy Postgres with Docker Compose
+      block:
+        - name: Create directories for Postgres
+          ansible.builtin.file:
+            path: "{{ item }}"
+            state: directory
+            mode: '0755'
+            recurse: yes            
+          loop:
+            - "{{ path_to_postgres_config }}"
+          when: path_to_postgres_config is defined
+
+        - name: Run Docker Compose to deploy Postgres
+          shell: docker compose up -d
+          args:
+            chdir: /home/{{ ansible_user }}/git/self-hosted/apps/postgres
+          environment:
+            path_to_postgres_config: "{{ lookup('env', 'path_to_postgres_config') }}"
+            postgres_password: "{{ lookup('env', 'postgres_password') }}"
+          become_user: "{{ ansible_user }}"
+
     - name: Set up Open WebUI configuration directory and run Docker Compose
       block:
         - name: Create directories for Open WebUI
@@ -54,6 +75,13 @@
             - "{{ path_to_nextcloud_config }}"
             - "{{ path_to_nextcloud_data }}"
           when: path_to_nextcloud_config is defined and path_to_nextcloud_data is defined
+
+        - name: Create the Nextcloud database in PostgreSQL
+          shell: |
+            docker exec -u postgres postgres psql -h localhost -U postgres -c "CREATE DATABASE nextcloud;"
+          environment:
+            PGPASSWORD: "{{ postgres_password }}"
+          when: postgres_password is defined
 
         - name: Run Docker Compose to deploy Nextcloud
           shell: docker compose up -d

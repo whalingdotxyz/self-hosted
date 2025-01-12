@@ -83,8 +83,15 @@
 
         - name: Create the Nextcloud database in PostgreSQL
           shell: |
-            docker exec -e PGPASSWORD={{ postgres_password }} -u postgres postgres psql -h postgres -U postgres -c "CREATE DATABASE nextcloud;"
-          when: postgres_password is defined
+            docker exec -u postgres postgres psql -U postgres -c "CREATE DATABASE nextcloud;"
+        - name: Check if the Nextcloud database exists
+          shell: |
+            docker exec -u postgres postgres psql -U postgres -tc "SELECT 1 FROM pg_database WHERE datname = 'nextcloud';" | grep -q 1
+          register: db_check
+          changed_when: false
+          failed_when: db_check.rc != 0
+  
+          
 
         - name: Run Docker Compose to deploy Nextcloud
           shell: docker compose up -d

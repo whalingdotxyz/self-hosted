@@ -11,7 +11,7 @@
         state: present
       when: ansible_os_family == "Debian"
       
-    - name: Clone the self-hosted repository using SSH
+    - name: Clone the self-hosted repository using https
       git:
         repo: 'https://github.com/{{git_username}}/self-hosted.git'
         dest: /home/{{ ansible_user }}/git/self-hosted

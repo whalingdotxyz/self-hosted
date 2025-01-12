@@ -10,10 +10,10 @@
         state: present
       when: ansible_os_family == "Debian"
       
-    - name: Clone the home-server repository using SSH
+    - name: Clone the self-hosted repository using https
       git:
-        repo: 'git@github.com/{{git_username}}/home-server.git'
-        dest: /home/{{ ansible_user }}/git/home-server
+        repo: 'git@github.com/{{git_username}}/self-hosted.git'
+        dest: /home/{{ ansible_user }}/git/self-hosted
         update: yes
       become_user: "{{ ansible_user }}"
 
@@ -34,7 +34,7 @@
         - name: Run Docker Compose to deploy Open WebUI
           shell: docker compose up -d
           args:
-            chdir: /home/{{ ansible_user }}/git/home-server/apps/open-webui
+            chdir: /home/{{ ansible_user }}/git/self-hosted/apps/open-webui
           environment:
             path_to_open_webui_config: "{{ lookup('env', 'path_to_open_webui_config') }}"
             openai_api_key: "{{ lookup('env', 'openai_api_key') }}"
@@ -58,7 +58,7 @@
         - name: Run Docker Compose to deploy Nextcloud
           shell: docker compose up -d
           args:
-            chdir: /home/{{ ansible_user }}/git/home-server/apps/nextcloud
+            chdir: /home/{{ ansible_user }}/git/self-hosted/apps/nextcloud
           environment:
             nextcloud_trusted_domains: "{{ lookup('env', 'nextcloud_trusted_domains') }}"           
             path_to_nextcloud_config: "{{ lookup('env', 'path_to_nextcloud_config') }}"
@@ -82,7 +82,7 @@
         - name: Run Docker Compose to deploy Only-Office
           shell: docker compose up -d
           args:
-            chdir: /home/{{ ansible_user }}/git/home-server/apps/only-office
+            chdir: /home/{{ ansible_user }}/git/self-hosted/apps/only-office
           environment:
             path_to_onlyoffice: "{{ lookup('env', 'path_to_only_office') }}"           
           become_user: "{{ ansible_user }}"
@@ -104,7 +104,7 @@
         - name: Run Docker Compose to deploy Duplicati
           shell: docker compose up -d
           args:
-            chdir: /home/{{ ansible_user }}/git/home-server/apps/duplicati
+            chdir: /home/{{ ansible_user }}/git/self-hosted/apps/duplicati
           environment:
             path_to_duplicati_config: "{{ lookup('env', 'path_to_duplicati_config') }}" 
             duplicati_encryption_key: "{{ lookup('env', 'duplicati_encryption_key') }}" 

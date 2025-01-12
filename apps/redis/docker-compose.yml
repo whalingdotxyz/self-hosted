@@ -10,4 +10,4 @@ services:
     volumes:
       - "${path_to_redis_config}:/data"  # Persist Redis data
     restart: always  # Auto-restart container on failure
-    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
+    command: ["redis-server", "--requirepass", "${redis_password}"]

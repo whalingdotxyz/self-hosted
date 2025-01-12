@@ -12,7 +12,7 @@
       
     - name: Clone the self-hosted repository using https
       git:
-        repo: 'git@github.com/{{git_username}}/self-hosted.git'
+        repo: 'https://github.com/{{git_username}}/self-hosted.git'
         dest: /home/{{ ansible_user }}/git/self-hosted
         update: yes
       become_user: "{{ ansible_user }}"

@@ -211,6 +211,9 @@
           args:
             chdir: /home/{{ ansible_user }}/git/self-hosted/apps/ghostfolio
           environment:
+            path_to_ghostfolio_config: "{{ lookup('env', 'path_to_ghostfolio_config') }}"
+            gf_access_token: "{{ lookup('env', 'gf_access_token') }}"
+            gf_jwt_secret: "{{ lookup('env', 'gf_jwt_secret') }}"
             db_host: "{{ lookup('env', 'db_host') }}"           
             redis_password: "{{ lookup('env', 'redis_password') }}"
             postgres_password: "{{ lookup('env', 'postgres_password') }}"

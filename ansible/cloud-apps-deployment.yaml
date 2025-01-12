@@ -191,7 +191,7 @@
             group: "{{ ansible_user }}"              
           loop:
             - "{{ path_to_ghostfolio_config }}"
-          when: path_to_ghostfolio_config is defined and path_to_ghostfolio_data is defined
+          when: path_to_ghostfolio_config is defined
 
         - name: Check if the Ghostfolio database exists
           shell: |

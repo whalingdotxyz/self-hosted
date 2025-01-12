@@ -38,3 +38,34 @@
             path_to_postgres_config: "{{ lookup('env', 'path_to_postgres_config') }}"
             postgres_password: "{{ lookup('env', 'postgres_password') }}"
           become_user: "{{ ansible_user }}"
+          register: docker_compose_output
+
+        - name: Show docker compose output for Postgres
+          debug:
+            var: docker_compose_output.stdout         
+
+    - name: Set up and deploy Redis with Docker Compose
+      block:
+        - name: Create directories for Redis
+          ansible.builtin.file:
+            path: "{{ item }}"
+            state: directory
+            mode: '0755'
+            recurse: yes            
+          loop:
+            - "{{ path_to_redis_config }}"
+          when: path_to_redis_config is defined
+
+        - name: Run Docker Compose to deploy Redis
+          shell: docker compose up -d
+          args:
+            chdir: /home/{{ ansible_user }}/git/self-hosted/apps/redis
+          environment:
+            path_to_redis_config: "{{ lookup('env', 'path_to_redis_config') }}"
+            redis_password: "{{ lookup('env', 'redis_password') }}"
+          become_user: "{{ ansible_user }}"
+          register: docker_compose_output
+
+        - name: Show docker compose output for Postgres
+          debug:
+            var: docker_compose_output.stdout

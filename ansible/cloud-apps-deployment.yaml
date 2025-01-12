@@ -83,10 +83,8 @@
 
         - name: Create the Nextcloud database in PostgreSQL
           shell: |
-            docker exec -u postgres postgres psql -h postgres -U postgres -c "CREATE DATABASE nextcloud;"
-          environment:
-            PGPASSWORD: "{{ lookup('env', 'postgres_password') }}"
-          register: create_db_output
+            docker exec -e PGPASSWORD={{ postgres_password }} -u postgres postgres psql -h postgres -U postgres -c "CREATE DATABASE nextcloud;"
+          when: postgres_password is defined
 
         - name: Run Docker Compose to deploy Nextcloud
           shell: docker compose up -d

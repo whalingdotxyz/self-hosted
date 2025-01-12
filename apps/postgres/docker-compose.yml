@@ -5,7 +5,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ~/apps/postgres:/var/lib/postgresql/data
+      - "${path_to_postgres_config}:/var/lib/postgresql/data"
     environment:
       - PUID=1000
       - PGID=1000

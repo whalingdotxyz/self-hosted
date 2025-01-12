@@ -12,7 +12,7 @@
       
     - name: Clone the home-server repository using SSH
       git:
-        repo: 'git@github.com:{{git_username}}/home-server.git'
+        repo: 'git@github.com/{{git_username}}/home-server.git'
         dest: /home/{{ ansible_user }}/git/home-server
         update: yes
       become_user: "{{ ansible_user }}"

@@ -206,7 +206,7 @@
             postgres_password: "{{ lookup('env', 'postgres_password') }}"
           become_user: "{{ ansible_user }}"
 
-     - name: Set up Homepage configuration directory and run Docker Compose
+    - name: Set up Homepage configuration directory and run Docker Compose
       block:
         - name: Create directories for Homepage
           ansible.builtin.file:

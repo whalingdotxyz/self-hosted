@@ -204,5 +204,26 @@
             db_host: "{{ lookup('env', 'db_host') }}"           
             redis_password: "{{ lookup('env', 'redis_password') }}"
             postgres_password: "{{ lookup('env', 'postgres_password') }}"
-
           become_user: "{{ ansible_user }}"
+
+     - name: Set up Homepage configuration directory and run Docker Compose
+      block:
+        - name: Create directories for Homepage
+          ansible.builtin.file:
+            path: "{{ item }}"
+            state: directory
+            mode: '0755'
+            recurse: yes  
+            owner: "{{ ansible_user }}"
+            group: "{{ ansible_user }}"            
+          loop:
+            - "{{ path_to_homepage_config }}"
+          when: path_to_homepage_config is defined
+
+        - name: Run Docker Compose to deploy Homepage
+          shell: docker compose up -d
+          args:
+            chdir: /home/{{ ansible_user }}/git/self-hosted/apps/homepage
+          environment:
+            path_to_homepage_config: "{{ lookup('env', 'path_to_homepage_config') }}" 
+          become_user: "{{ ansible_user }}"         

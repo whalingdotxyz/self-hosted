@@ -65,3 +65,6 @@
         db_host: "{{ lookup('env', 'db_host') }}" #host ip for postgres and redis
         redis_password: "{{ lookup('env', 'redis_password') }}"
         postgres_password: "{{ lookup('env', 'postgres_password') }}"
+
+        #homepage
+        path_to_homepage_config: "{{ lookup('env', 'path_to_homepage_config') }}" 

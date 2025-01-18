@@ -90,8 +90,7 @@
           register: db_check
           changed_when: false
 
-        - name: Create the Authentik
-         database in PostgreSQL
+        - name: Create the Authentik database in PostgreSQL
           shell: |
             docker exec -u postgres postgres psql -U postgres -c "CREATE DATABASE authentik
             ;"

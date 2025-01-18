@@ -92,8 +92,7 @@
 
         - name: Create the Authentik database in PostgreSQL
           shell: |
-            docker exec -u postgres postgres psql -U postgres -c "CREATE DATABASE authentik
-            ;"
+            docker exec -u postgres postgres psql -U postgres -c "CREATE DATABASE authentik;"
           when: "'Database not found' in db_check.stdout" # Only create the database if it doesn't exist
           ignore_errors: yes  
 

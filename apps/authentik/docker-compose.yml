@@ -1,0 +1,38 @@
+services:
+  authentik-server:
+    image: ghcr.io/goauthentik/server:latest
+    container_name: authentik-server
+    command: server
+    environment:
+      AUTHENTIK_REDIS__HOST: ${db_host}
+      AUTHENTIK_REDIS__PASSWORD: ${redis_password}
+      AUTHENTIK_POSTGRESQL__HOST: ${db_host}
+      AUTHENTIK_POSTGRESQL__USER: postgres
+      AUTHENTIK_POSTGRESQL__NAME: authentik
+      AUTHENTIK_POSTGRESQL__PASSWORD: "${postgres_password}"
+      AUTHENTIK_SECRET_KEY: "${authentik_secret_key}"
+      AUTHENTIK_ERROR_REPORTING_ENABLED: "true"
+    volumes:
+      - "${path_to_authentik_media}:/media"
+      - "${path_to_authentik_templates}:/templates"
+    ports:
+      - "9000:9000"
+    restart: unless-stopped
+
+  authentik-worker:
+    image: ghcr.io/goauthentik/server:latest
+    container_name: authentik-worker
+    command: worker
+    environment:
+      AUTHENTIK_REDIS__HOST: ${db_host}
+      AUTHENTIK_REDIS__PASSWORD: ${redis_password}
+      AUTHENTIK_POSTGRESQL__HOST: ${db_host}
+      AUTHENTIK_POSTGRESQL__USER: postgres
+      AUTHENTIK_POSTGRESQL__NAME: authentik
+      AUTHENTIK_POSTGRESQL__PASSWORD: "${postgres_password}"
+      AUTHENTIK_SECRET_KEY: "${authentik_secret_key}"
+      AUTHENTIK_ERROR_REPORTING__ENABLED: "true"
+    volumes:
+      - "${path_to_authentik_media}:/media"
+      - "${path_to_authentik_templates}:/templates"
+      - "${path_to_authentik_certs}:/certs"

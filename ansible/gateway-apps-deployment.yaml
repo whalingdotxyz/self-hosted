@@ -69,3 +69,46 @@
         - name: Show docker compose output for Postgres
           debug:
             var: docker_compose_output.stdout
+
+    - name: Set up and deploy Authentik with Docker Compose
+      block:
+        - name: Create directories for Authentik
+          ansible.builtin.file:
+            path: "{{ item }}"
+            state: directory
+            mode: '0755'
+            recurse: yes            
+          loop:
+            - "{{ path_to_authentik_media }}"
+            - "{{ path_to_authentik_templates }}"
+            - "{{ path_to_authentik_certs }}"
+          when: path_to_authentik_media is defined path_to_authentik_templates is defined and path_to_authentik_certs is defined
+
+        - name: Check if the Authentik
+         database exists
+          shell: |
+            docker exec -u postgres postgres psql -U postgres -tc "SELECT 1 FROM pg_database WHERE datname = 'authentik';" || echo "Database not found"
+          register: db_check
+          changed_when: false
+
+        - name: Create the Authentik
+         database in PostgreSQL
+          shell: |
+            docker exec -u postgres postgres psql -U postgres -c "CREATE DATABASE authentik
+            ;"
+          when: "'Database not found' in db_check.stdout" # Only create the database if it doesn't exist
+          ignore_errors: yes  
+
+        - name: Run Docker Compose to deploy Authentik
+          shell: docker compose up -d
+          args:
+            chdir: /home/{{ ansible_user }}/git/self-hosted/apps/authentik
+          environment:
+            db_host: "{{ lookup('env', 'db_host') }}"
+            redis_password: "{{ lookup('env', 'redis_password') }}"
+            postgres_password: "{{ lookup('env', 'postgres_password') }}"
+            authentik_secret_key: "{{ lookup('env', 'authentik_secret_key') }}"
+            path_to_authentik_media: "{{ lookup('env', 'path_to_authentik_media') }}" 
+            path_to_authentik_templates: "{{ lookup('env', 'path_to_authentik_templates') }}"
+            path_to_authentik_certs: "{{ lookup('env', 'path_to_authentik_certs') }}"
+          become_user: "{{ ansible_user }}"

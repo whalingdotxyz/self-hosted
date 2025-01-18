@@ -1,0 +1,106 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/services/
+
+- Infrastructure:
+    - Semaphore:
+        icon: semaphore.svg
+        href: semaphore-host-ip:port
+        description: Semaphore
+    - NPM:
+        icon: nginx-proxy-manager.svg
+        href: npm-host-ip:port
+        description: Nginx Proxy Manager
+    - Netmaker:
+        icon: netmaker.png
+        href: dashboard.netmaker.example
+        description: Netmaker
+    - DDNS-Go:
+        icon: azure-dns.svg
+        href: ddns-go-host-ip:port
+        description: ddns-go
+    - Wireguard:
+        icon: wireguard.svg
+        href: wireguard-host-ip:port
+        description: wireguard
+    - Duplicati:
+        icon: duplicati.svg
+        href: duplicati-host-ip:port
+        descriptiom: duplicati
+- Cloud Apps:
+    - Nextcloud:
+        icon: nextcloud-blue.svg
+        href: nextcloud-host-ip:port
+        description: nextcloud
+    - Open-webui:
+        icon: open-webui-light.png
+        href: openwebui-host-ip:port
+        description: open-webui
+    - Ghostfolio:
+        icon: ghostfolio.svg
+        href: ghostfolio-host-ip:port
+        description: ghostfolio
+- Media:
+    - Jellyfin:
+        icon: jellyfin.svg
+        href: jellyfin-host-ip:port
+        description: Media Player
+        widget:
+          type: jellyfin
+          url: jellyfin-host-ip:port
+          key: "yourapikey"
+          enableBlocks: true
+          enableNowPlaying: true
+    - Jellyseerr:
+        icon: jellyseerr.svg
+        href: jellyseer-host-ip:port
+        description: Media Requests
+        widget:
+          type: jellyseerr
+          url: jellyseer-host-ip:port
+          key: "yourapikey"
+    - Radarr:
+        icon: radarr.svg
+        href: radarr-host-ip:port
+        description: Movie Pull Automation
+        widget:
+          type: radarr
+          url: radarr-host-ip:port
+          key: "yourapikey"
+          enableQueue: false
+    - Sonarr:
+        icon: sonarr.svg
+        href: sonarr-host-ip:port
+        description: TV Pull Automation
+        widget:
+          type: sonarr
+          url: sonarr-host-ip:port
+          key: "yourapikey"
+          enableQueue: false
+    - Bazarr:
+        icon: bazarr.svg
+        href: bazarr-host-ip:port
+        description: Subtitle Pull Automation
+        widget:
+          type: bazarr
+          url: bazarr-host-ip:port
+          key: "yourapikey"
+    - Prowlarr:
+        icon: prowlarr.svg
+        href: prowlarr-host-ip:port
+        description: Index Pull Automation
+        widget:
+          type: prowlarr
+          url: prowlarr-host-ip:port
+          key: "yourapikey"
+          enableQueue: false
+    - Transmission:
+        icon: transmission.svg
+        href: transmission-host-ip:port
+        description: transmission
+        widget:
+          type: transmission
+          url: transmission-host-ip:port
+          username: username
+          password: password
+

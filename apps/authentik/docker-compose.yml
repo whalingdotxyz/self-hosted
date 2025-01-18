@@ -32,6 +32,7 @@ services:
       AUTHENTIK_POSTGRESQL__PASSWORD: "${postgres_password}"
       AUTHENTIK_SECRET_KEY: "${authentik_secret_key}"
       AUTHENTIK_ERROR_REPORTING__ENABLED: "true"
+    user: root
     volumes:
       - "${path_to_authentik_media}:/media"
       - "${path_to_authentik_templates}:/templates"

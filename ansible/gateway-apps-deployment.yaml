@@ -82,7 +82,7 @@
             - "{{ path_to_authentik_media }}"
             - "{{ path_to_authentik_templates }}"
             - "{{ path_to_authentik_certs }}"
-          when: path_to_authentik_media is defined path_to_authentik_templates is defined and path_to_authentik_certs is defined
+          when: path_to_authentik_media is defined and path_to_authentik_templates is defined and path_to_authentik_certs is defined
 
         - name: Check if the Authentik database exists
           shell: |

@@ -84,8 +84,7 @@
             - "{{ path_to_authentik_certs }}"
           when: path_to_authentik_media is defined path_to_authentik_templates is defined and path_to_authentik_certs is defined
 
-        - name: Check if the Authentik
-         database exists
+        - name: Check if the Authentik database exists
           shell: |
             docker exec -u postgres postgres psql -U postgres -tc "SELECT 1 FROM pg_database WHERE datname = 'authentik';" || echo "Database not found"
           register: db_check

@@ -6,40 +6,44 @@
     - Semaphore:
         icon: semaphore.svg
         href: semaphore-host-ip:port
-        description: Semaphore
+        description: Ansible GUI
     - NPM:
         icon: nginx-proxy-manager.svg
         href: npm-host-ip:port
-        description: Nginx Proxy Manager
+        description: Reverse Proxy
     - Netmaker:
         icon: netmaker.png
         href: dashboard.netmaker.example
-        description: Netmaker
+        description: Mesh VPN
     - DDNS-Go:
         icon: azure-dns.svg
         href: ddns-go-host-ip:port
-        description: ddns-go
+        description: Public IP Updater
     - Wireguard:
         icon: wireguard.svg
         href: wireguard-host-ip:port
-        description: wireguard
+        description: VPN
     - Duplicati:
         icon: duplicati.svg
         href: duplicati-host-ip:port
-        descriptiom: duplicati
+        description: Backup
+    - Authentik:
+        icon: authentik.svg
+        href: authentik-host-ip:port
+        description: SSO Provider
 - Cloud Apps:
     - Nextcloud:
         icon: nextcloud-blue.svg
         href: nextcloud-host-ip:port
-        description: nextcloud
+        description: Documents
     - Open-webui:
         icon: open-webui-light.png
         href: openwebui-host-ip:port
-        description: open-webui
+        description: Llm GUI
     - Ghostfolio:
         icon: ghostfolio.svg
         href: ghostfolio-host-ip:port
-        description: ghostfolio
+        description: Portfolio Tracker
 - Media:
     - Jellyfin:
         icon: jellyfin.svg
@@ -97,7 +101,7 @@
     - Transmission:
         icon: transmission.svg
         href: transmission-host-ip:port
-        description: transmission
+        description: Torrent Client
         widget:
           type: transmission
           url: transmission-host-ip:port

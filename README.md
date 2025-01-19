@@ -4,7 +4,7 @@ Self-hosted is a collection of Ansible playbooks designed to deploy and update y
 
 ## How To
 
-- **OPTIONAL**
+- **OPTIONAL**: Install [Netmaker](https://www.netmaker.io/)
 
 ### Playbooks
 

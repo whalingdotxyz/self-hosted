@@ -1,13 +1,13 @@
 # Self-hosted
 
-**Self-hosted is a collection of Ansible playbooks designed to deploy and update your self-hosted applications. While it can be used directly with Ansible, it was specifically created with [Semaphore](https://semaphoreui.com/) in mind to provide a more user-friendly experience.
+Self-hosted is a collection of Ansible playbooks designed to deploy and update your self-hosted applications. While it can be used directly with Ansible, it was specifically created with [Semaphore](https://semaphoreui.com/) in mind to provide a more user-friendly experience.
 
 ## How To
 
 ### Playbooks
 
 <details open>
-<summary>Gateway Apps</summary>
+<summary>**Gateway Apps**</summary>
 
 * Authentik
 

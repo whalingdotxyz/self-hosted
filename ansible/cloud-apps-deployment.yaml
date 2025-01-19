@@ -90,6 +90,10 @@
           environment:
             path_to_open_webui_config: "{{ lookup('env', 'path_to_open_webui_config') }}"
             openai_api_key: "{{ lookup('env', 'openai_api_key') }}"
+            oauth_client_id: "{{ lookup('env', 'oauth_client_id') }}"
+            oauth_client_secret: "{{ lookup('env', 'oauth_client_secret') }}"
+            oauth_provider_url: "{{ lookup('env', 'oauth_provider_url') }}"
+            oauth_provider_name: "{{ lookup('env', 'oauth_provider_name') }}"
           become_user: "{{ ansible_user }}"
 
     - name: Set up Nextcloud configuration directory and run Docker Compose
@@ -193,7 +197,6 @@
           when: "'Database not found' in db_check.stdout" # Only create the database if it doesn't exist
           ignore_errors: yes  
           
-
         - name: Run Docker Compose to deploy Ghostfolio
           shell: docker compose up -d
           args:

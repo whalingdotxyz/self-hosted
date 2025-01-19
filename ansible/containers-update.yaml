@@ -66,7 +66,10 @@
         #open-webui config
         path_to_openw_webui_config: "{{ lookup('env', 'path_to_open_webui_config') }}"
         openai_api_key: "{{ lookup('env', 'openai_api_key') }}"
-
+        oauth_client_id: "{{ lookup('env', 'oauth_client_id') }}"
+        oauth_client_secret: "{{ lookup('env', 'oauth_client_secret') }}"
+        oauth_provider_url: "{{ lookup('env', 'oauth_provider_url') }}"
+        oauth_provider_name: "{{ lookup('env', 'oauth_provider_name') }}"
         #nextcloud config
         path_to_nextcloud_config: "{{ lookup('env', 'path_to_nextcloud_config') }}"
         path_to_nextcloud_data: "{{ lookup('env', 'path_to_nextcloud_data') }}"

@@ -29,9 +29,9 @@ Self-hosted is a collection of Ansible playbooks designed to deploy and update y
 
     - Redis + Postgres
     - [Authentik](https://goauthentik.io/): SSO Provider
-    - [Nginx-Proxy-Manager](https://nginxproxymanager.com/): Reverse Proxy (To be added)
+    - [Nginx-Proxy-Manager](https://nginxproxymanager.com/): Reverse Proxy **(To be added)**
     - [wg-easy](https://github.com/wg-easy/wg-easy): Wireguard VPN + GUI (alternative to Netmaker client)
-    - [DDNS-go](https://github.com/jeessy2/ddns-go) Public IP updater (To be added)
+    - [DDNS-go](https://github.com/jeessy2/ddns-go) Public IP updater **(To be added)**
 
 - **Cloud Apps**
 

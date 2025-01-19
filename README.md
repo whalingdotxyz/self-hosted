@@ -8,6 +8,14 @@ Self-hosted is a collection of Ansible playbooks designed to deploy and update y
 
 - **RECOMMENDED** Install [Semaphore](https://semaphoreui.com/) a web-based interface for managing Ansible automation tasks. It provides a user-friendly, intuitive platform to run, monitor, and manage Ansible playbooks, making automation accessible even for those with limited command-line experience.
 
+    - Set Repository
+    - Set credentials in the **Key Store** (github if needed, hosts credentials)
+    - Set inventory (hosts you want to target)
+    - Set Variable Groups (list of variables to set in env-library)
+    - Create  Tasks
+    - Schedule updates tasks
+    
+    
 ### Playbooks
 
 <details open>

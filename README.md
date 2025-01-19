@@ -2,6 +2,8 @@
 
 Self-hosted is a collection of Ansible playbooks designed to deploy and update your self-hosted applications. While it can be used directly with Ansible, it was specifically created with [Semaphore](https://semaphoreui.com/) in mind to provide a more user-friendly experience.
 
+- **Note** All the following has been designed for debian based servers (debian, ubuntu, armbian, etc..), if you want to adjust/modify settings fork the repo and adapt it to your needs. if there is apps you want to see added open an issue!
+
 ## How To
 
 - **OPTIONAL**:Install [Netmaker](https://www.netmaker.io/) to create a mesh VPN between hosts on different networks, allowing them to securely connect and communicate.

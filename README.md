@@ -18,7 +18,7 @@ Self-hosted is a collection of Ansible playbooks designed to deploy and update y
     - Create  Tasks
     - Schedule updates tasks
     
-### Playbooks
+# Playbooks
 
 - **Gateway Apps**
 

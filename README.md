@@ -4,11 +4,26 @@
 
 ## How To
 
-<details open>
-<summary>Apps List</summary>
+### Playbooks
 
-* Homepage
-* 
-* Fish
+<details open>
+<summary>Gateway Apps</summary>
+
+* Authentik
 
 </details>
+
+<details open>
+<summary>Cloud Apps</summary>
+
+* Homepage
+
+</details>
+
+<details open>
+<summary>Media Center</summary>
+
+* Jellyfin
+
+</details>
+

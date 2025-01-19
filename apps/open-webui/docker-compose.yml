@@ -5,12 +5,12 @@ services:
     container_name: open-webui
     environment:
       - OPENAI_API_KEY=${openai_api_key}  # Use environment variable for the API key
-    # - ENABLE_LOGIN_FORM=False #if you want to login only via SSO
-    # - ENABLE_OAUTH_SIGNUP #to sign up via SSO
-    # - OAUTH_CLIENT_ID="yourclientid"
-    # - OAUTH_CLIENT_SECRET="yourclientsecret"
-    # - OPENID_PROVIDER_URL=https://yourproviderurl/.well-known/openid-configuration
-    # - OAUTH_PROVIDER_NAME="yourprovidername"
+      - ENABLE_LOGIN_FORM=false #if you want to login only via SSO
+      - ENABLE_OAUTH_SIGNUP=true #to sign up via SSO
+      - OAUTH_CLIENT_ID=${oauth_client_id}
+      - OAUTH_CLIENT_SECRET=${oauth_client_secret}
+      - OPENID_PROVIDER_URL=${oauth_provider_url}
+      - OAUTH_PROVIDER_NAME=${oauth_provider_name}
     volumes:
       - "${path_to_open_webui_config}:/app/backend/data"  # Map host path to container path
     ports:

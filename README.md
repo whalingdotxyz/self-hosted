@@ -2,8 +2,7 @@
 
 Self-hosted is a collection of Ansible playbooks designed to deploy and update your self-hosted applications. While it can be used directly with Ansible, it was specifically created with [Semaphore](https://semaphoreui.com/) in mind to provide a more user-friendly experience.
 
-![Homepage-demo](./homepage.png)
-<p align="center"><em>Current look of homepage dashboard if using the shipped configuration files (variables have to be set).</em></p>
+![Homepage-demo](./homepage.png)<p align="center"><em>Current look of homepage dashboard if using the shipped configuration files (variables have to be set).</em></p>
 
 
 - **Note** The following instructions are designed for Debian-based servers (such as Debian, Ubuntu, Armbian, etc.). If you need to adjust or modify the settings, feel free to fork the repository and customize it to your requirements. If there are apps you'd like to see added, please open an issue!

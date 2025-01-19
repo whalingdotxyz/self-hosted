@@ -22,9 +22,30 @@ Self-hosted is a collection of Ansible playbooks designed to deploy and update y
 
 - **Gateway Apps**
 
-- [Authentik](https://goauthentik.io/): SSO Provider
-- (To be added)[Nginx-Proxy-Manager](https://nginxproxymanager.com/): Reverse Proxy
-- [wg-easy](https://github.com/wg-easy/wg-easy): Wireguard VPN + GUI (alternative to Netmaker client)
-- (To be added)[DDNS-go](https://github.com/jeessy2/ddns-go) Public IP updater
+    - Redis + Postgres
+    - [Authentik](https://goauthentik.io/): SSO Provider
+    - [Nginx-Proxy-Manager](https://nginxproxymanager.com/): Reverse Proxy (To be added)
+    - [wg-easy](https://github.com/wg-easy/wg-easy): Wireguard VPN + GUI (alternative to Netmaker client)
+    - [DDNS-go](https://github.com/jeessy2/ddns-go) Public IP updater (To be added)
+
+- **Cloud Apps**
+
+    - Redis + Postgres
+    - [Open-webui](https://docs.openwebui.com/): GUI for llm's (open-AI api, ollama)
+    - [Nextcloud](https://nextcloud.com/): self-hosted alternative to drives (dropbox, google, etc..)
+    - [Only-office](https://www.onlyoffice.com/): Documents server version to integrate with Nextcloud
+    - [Duplicati](https://duplicati.com/): Backup solution.
+    - [Ghostfolio](https://ghostfol.io): Portfolio tracker
+    - [Homepage](https://gethomepage.dev/): dashboard for your homeserver.
+
+- **Media Center**
+    - [Jellyfin](https://jellyfin.org/): Media Player 
+    - [Jellyseer](https://github.com/Fallenbagel/jellyseerr): Media request automation
+    - [Prowlarr](https://prowlarr.com/): indexer manager
+    - [radarr](https://radarr.video/): movie collection manager
+    - [sonarr](https://sonarr.tv/): TV Shows collection manager
+    - [Bazarr](https://www.bazarr.media/) Subtitle manager
+    - [Transmission](https://transmissionbt.com/) Torrent Client
+
 
 

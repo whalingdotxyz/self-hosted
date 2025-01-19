@@ -4,10 +4,12 @@ Self-hosted is a collection of Ansible playbooks designed to deploy and update y
 
 ## How To
 
+- **OPTIONAL**
+
 ### Playbooks
 
 <details open>
-<summary>**Gateway Apps**</summary>
+<summary>Gateway Apps</summary>
 
 * Authentik
 

@@ -11,7 +11,7 @@ Self-hosted is a collection of Ansible playbooks designed to deploy and update y
 
 - **OPTIONAL**:Install [Netmaker](https://www.netmaker.io/) to create a mesh VPN between hosts on different networks, allowing them to securely connect and communicate.
     - Install NetClient on the hosts you want to designate as nodes
-    - Add Egress Rules to be allow communication between networks
+    - Add Egress Rules to allow communication between networks
     - Add Gateway to connect devices as clients. **(Note)**: you might need to design a custom DNS for it to work proprely.
 
 - **RECOMMENDED** Install [Semaphore](https://semaphoreui.com/) a web-based interface for managing Ansible automation tasks. It provides a user-friendly, intuitive platform to run, monitor, and manage Ansible playbooks, making automation accessible even for those with limited command-line experience.
@@ -41,13 +41,13 @@ Self-hosted is a collection of Ansible playbooks designed to deploy and update y
     - [Only-office](https://www.onlyoffice.com/): Documents server version to integrate with Nextcloud
     - [Duplicati](https://duplicati.com/): Backup solution.
     - [Ghostfolio](https://ghostfol.io): Portfolio tracker
-    - [Homepage](https://gethomepage.dev/): dashboard for your homeserver.
+    - [Homepage](https://gethomepage.dev/): Dashboard for your homeserver.
 
 - **Media Center**
     - [Jellyfin](https://jellyfin.org/): Media Player 
     - [Jellyseer](https://github.com/Fallenbagel/jellyseerr): Media request automation
-    - [Prowlarr](https://prowlarr.com/): indexer manager
-    - [radarr](https://radarr.video/): movie collection manager
+    - [Prowlarr](https://prowlarr.com/): Indexer manager
+    - [radarr](https://radarr.video/): Movie collection manager
     - [sonarr](https://sonarr.tv/): TV Shows collection manager
     - [Bazarr](https://www.bazarr.media/) Subtitle manager
     - [Transmission](https://transmissionbt.com/) Torrent Client

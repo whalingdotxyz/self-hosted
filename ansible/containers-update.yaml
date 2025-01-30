@@ -83,6 +83,30 @@
         path_to_duplicati_config: "{{ lookup('env', 'path_to_duplicati_config') }}"
         duplicati_encryption_key: "{{ lookup('env', 'duplicati_encryption_key') }}" 
         
+        #postgres config
+        path_to_postgres_config: "{{ lookup('env', 'path_to_postgres_config') }}"
+        postgres_password: "{{ lookup('env', 'postgres_password') }}"
+
+        #redis config
+        path_to_redis_config: "{{ lookup('env', 'path_to_redis_config') }}"
+        redis_password: "{{ lookup('env', 'redis_password') }}"
+
+        #ghostfolio
+        path_to_ghostfolio_config: "{{ lookup('env', 'path_to_ghostfolio_config') }}"
+        gf_access_token: "{{ lookup('env', 'gf_access_token') }}"
+        gf_jwt_secret: "{{ lookup('env', 'gf_jwt_secret') }}"
+        db_host: "{{ lookup('env', 'db_host') }}" #host ip for postgres and redis
+        redis_password: "{{ lookup('env', 'redis_password') }}"
+        postgres_password: "{{ lookup('env', 'postgres_password') }}"
+
+        #homepage
+        path_to_homepage_config: "{{ lookup('env', 'path_to_homepage_config') }}" 
+
+        #authentik
+        authentik_secret_key: "{{ lookup('env', 'authentik_secret_key') }}"
+        path_to_authentik_media: "{{ lookup('env', 'path_to_authentik_media') }}"
+        path_to_authentik_templates: "{{ lookup('env', 'path_to_authentik_templates') }}"
+                
       become_user: "{{ ansible_user }}"
       loop: "{{ running_containers.stdout_lines }}"
 

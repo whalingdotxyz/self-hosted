@@ -26,15 +26,10 @@
 
     - name: Update Docker container if running
       shell: |
-        if [[ "{{ item }}" == "authentik-worker" || "{{ item }}" == "authentik-server" ]]; then
-          cd /home/{{ ansible_user }}/git/self-hosted/apps/authentik && \
-          docker compose pull && \
-          docker compose up -d
-        else
-          cd /home/{{ ansible_user }}/git/self-hosted/apps/{{ item }} && \
-          docker compose pull && \
-          docker compose up -d
-        fi
+
+        cd /home/{{ ansible_user }}/git/self-hosted/apps/{{ item }} && \
+        docker compose pull && \
+        docker compose up -d
       args:
         chdir: /home/{{ ansible_user }}/git/self-hosted/apps/{{ item }}
       environment:
@@ -70,7 +65,7 @@
         password: "{{ lookup('env', 'password') }}"
 
         #open-webui config
-        path_to_open_webui_config: "{{ lookup('env', 'path_to_open_webui_config') }}"
+        path_to_openweb-ui_config: "{{ lookup('env', 'path_to_open_webui_config') }}"
         openai_api_key: "{{ lookup('env', 'openai_api_key') }}"
         oauth_client_id: "{{ lookup('env', 'oauth_client_id') }}"
         oauth_client_secret: "{{ lookup('env', 'oauth_client_secret') }}"

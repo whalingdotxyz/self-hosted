@@ -4,7 +4,7 @@ services:
     image: ghcr.io/open-webui/open-webui:main
     container_name: open-webui
     environment:
-      - OPENAI_API_KEY=${openai_api_key}  # Use environment variable for the API key
+      - OPENAI_API_KEY=${openai_api_key} # Use environment variable for the API key
       - ENABLE_LOGIN_FORM=false #if you want to login only via SSO
       - ENABLE_OAUTH_SIGNUP=true #to sign up via SSO
       - OAUTH_MERGE_ACCOUNTS_BY_EMAIL=true #could be usefull if trying to merge your admin accounts
@@ -12,9 +12,9 @@ services:
       - OAUTH_CLIENT_SECRET=${oauth_client_secret}
       - OPENID_PROVIDER_URL=${oauth_provider_url}
       - OAUTH_PROVIDER_NAME=${oauth_provider_name}
-      
+
     volumes:
-      - "${path_to_open_webui_config}:/app/backend/data"  # Map host path to container path
+      - "${path_to_openweb-ui_config}:/app/backend/data" # Map host path to container path
     ports:
-      - "3000:8080"  # Map port 3000 on host to port 8080 in the container
+      - "3000:8080" # Map port 3000 on host to port 8080 in the container
     restart: always

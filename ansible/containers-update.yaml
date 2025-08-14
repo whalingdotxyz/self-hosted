@@ -12,7 +12,7 @@
 
     - name: Clone the self-hosted repository using https
       git:
-        repo: 'https://github.com:{{ git_username }}/self-hosted.git'
+        repo: 'https://github.com/whalingdotxyz/self-hosted.git'
         dest: /home/{{ ansible_user }}/git/self-hosted
         update: yes
       become_user: "{{ ansible_user }}"
@@ -31,7 +31,7 @@
         docker compose up -d
       args:
         chdir: /home/{{ ansible_user }}/git/self-hosted/apps/{{ item }}
-      environment: 
+      environment:
         #path to directories
         path_to_media: "{{ lookup('env', 'path_to_media') }}"
         path_to_data: "{{ lookup('env', 'path_to_data') }}"
@@ -81,8 +81,8 @@
 
         #duplicati config
         path_to_duplicati_config: "{{ lookup('env', 'path_to_duplicati_config') }}"
-        duplicati_encryption_key: "{{ lookup('env', 'duplicati_encryption_key') }}" 
-        
+        duplicati_encryption_key: "{{ lookup('env', 'duplicati_encryption_key') }}"
+
         #postgres config
         path_to_postgres_config: "{{ lookup('env', 'path_to_postgres_config') }}"
         postgres_password: "{{ lookup('env', 'postgres_password') }}"
@@ -100,13 +100,13 @@
         postgres_password: "{{ lookup('env', 'postgres_password') }}"
 
         #homepage
-        path_to_homepage_config: "{{ lookup('env', 'path_to_homepage_config') }}" 
+        path_to_homepage_config: "{{ lookup('env', 'path_to_homepage_config') }}"
 
         #authentik
         authentik_secret_key: "{{ lookup('env', 'authentik_secret_key') }}"
         path_to_authentik_media: "{{ lookup('env', 'path_to_authentik_media') }}"
         path_to_authentik_templates: "{{ lookup('env', 'path_to_authentik_templates') }}"
-                
+
       become_user: "{{ ansible_user }}"
       loop: "{{ running_containers.stdout_lines }}"
 

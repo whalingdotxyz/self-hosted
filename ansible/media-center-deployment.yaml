@@ -4,16 +4,15 @@
   become: yes
 
   tasks:
-
     - name: Ensure Git is installed
       apt:
         name: git
         state: present
       when: ansible_os_family == "Debian"
-      
+
     - name: Clone the self-hosted repository using https
       git:
-        repo: 'https://github.com/{{git_username}}/self-hosted.git'
+        repo: "https://github.com/whalingdotxyz/self-hosted.git"
         dest: /home/{{ ansible_user }}/git/self-hosted
         update: yes
       become_user: "{{ ansible_user }}"
@@ -24,7 +23,7 @@
           ansible.builtin.file:
             path: "{{ item }}"
             state: directory
-            mode: '0755'
+            mode: "0755"
             recurse: yes
           loop:
             - "{{ path_to_jellyfin_config }}"
@@ -37,7 +36,7 @@
             chdir: /home/{{ ansible_user }}/git/self-hosted/apps/jellyfin
           environment:
             path_to_jellyfin_config: "{{ lookup('env', 'path_to_jellyfin_config') }}"
-            path_to_media: "{{ lookup('env', 'path_to_media') }}"   
+            path_to_media: "{{ lookup('env', 'path_to_media') }}"
           become_user: "{{ ansible_user }}"
 
     - name: Set up and deploy Radarr with Docker Compose
@@ -46,7 +45,7 @@
           ansible.builtin.file:
             path: "{{ item }}"
             state: directory
-            mode: '0755'
+            mode: "0755"
             recurse: yes
           loop:
             - "{{ path_to_radarr_config }}"
@@ -60,8 +59,8 @@
             chdir: /home/{{ ansible_user }}/git/self-hosted/apps/radarr
           environment:
             path_to_radarr_config: "{{ lookup('env', 'path_to_radarr_config') }}"
-            path_to_downloads: "{{ lookup('env', 'path_to_downloads') }}"  
-            path_to_movies: "{{ lookup('env', 'path_to_movies') }}" 
+            path_to_downloads: "{{ lookup('env', 'path_to_downloads') }}"
+            path_to_movies: "{{ lookup('env', 'path_to_movies') }}"
           become_user: "{{ ansible_user }}"
 
     - name: Set up and deploy Sonarr with Docker Compose
@@ -70,7 +69,7 @@
           ansible.builtin.file:
             path: "{{ item }}"
             state: directory
-            mode: '0755'
+            mode: "0755"
             recurse: yes
           loop:
             - "{{ path_to_sonarr_config }}"
@@ -84,8 +83,8 @@
             chdir: /home/{{ ansible_user }}/git/self-hosted/apps/sonarr
           environment:
             path_to_sonarr_config: "{{ lookup('env', 'path_to_sonarr_config') }}"
-            path_to_downloads: "{{ lookup('env', 'path_to_downloads') }}"  
-            path_to_tvshows: "{{ lookup('env', 'path_to_tvshows') }}" 
+            path_to_downloads: "{{ lookup('env', 'path_to_downloads') }}"
+            path_to_tvshows: "{{ lookup('env', 'path_to_tvshows') }}"
           become_user: "{{ ansible_user }}"
 
     - name: Set up and deploy Prowlarr with Docker Compose
@@ -94,7 +93,7 @@
           ansible.builtin.file:
             path: "{{ item }}"
             state: directory
-            mode: '0755'
+            mode: "0755"
             recurse: yes
           loop:
             - "{{ path_to_prowlarr_config }}"
@@ -114,7 +113,7 @@
           ansible.builtin.file:
             path: "{{ item }}"
             state: directory
-            mode: '0755'
+            mode: "0755"
             recurse: yes
           loop:
             - "{{ path_to_bazarr_config }}"
@@ -128,8 +127,8 @@
             chdir: /home/{{ ansible_user }}/git/self-hosted/apps/bazarr
           environment:
             path_to_bazarr_config: "{{ lookup('env', 'path_to_bazarr_config') }}"
-            path_to_tvshows: "{{ lookup('env', 'path_to_tvshows') }}" 
-            path_to_movies: "{{ lookup('env', 'path_to_movies') }}" 
+            path_to_tvshows: "{{ lookup('env', 'path_to_tvshows') }}"
+            path_to_movies: "{{ lookup('env', 'path_to_movies') }}"
           become_user: "{{ ansible_user }}"
 
     - name: Set up and deploy Jellyseerr with Docker Compose
@@ -138,7 +137,7 @@
           ansible.builtin.file:
             path: "{{ item }}"
             state: directory
-            mode: '0755'
+            mode: "0755"
             recurse: yes
           loop:
             - "{{ path_to_jellyseerr_config }}"
@@ -158,7 +157,7 @@
           ansible.builtin.file:
             path: "{{ item }}"
             state: directory
-            mode: '0755'
+            mode: "0755"
             recurse: yes
           loop:
             - "{{ path_to_transmission_config }}"
@@ -171,7 +170,7 @@
             chdir: /home/{{ ansible_user }}/git/self-hosted/apps/transmission
           environment:
             path_to_transmission_config: "{{ lookup('env', 'path_to_transmission_config') }}"
-            path_to_downloads: "{{ lookup('env', 'path_to_downloads') }}" 
+            path_to_downloads: "{{ lookup('env', 'path_to_downloads') }}"
             username: "{{ lookup('env', 'username') }}"
             password: "{{ lookup('env', 'password')}}"
           become_user: "{{ ansible_user }}"

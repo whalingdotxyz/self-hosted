@@ -4,16 +4,15 @@
   become: yes
 
   tasks:
-    
     - name: Ensure Git is installed
       apt:
         name: git
         state: present
       when: ansible_os_family == "Debian"
-      
+
     - name: Clone the self-hosted repository using https
       git:
-        repo: 'https://github.com/Wa1ling/self-hosted.git'
+        repo: "https://github.com/whalingdotxyz/self-hosted.git"
         dest: /home/{{ ansible_user }}/git/self-hosted
         update: yes
       become_user: "{{ ansible_user }}"
@@ -24,8 +23,8 @@
           ansible.builtin.file:
             path: "{{ item }}"
             state: directory
-            mode: '0755'
-            recurse: yes            
+            mode: "0755"
+            recurse: yes
           loop:
             - "{{ path_to_postgres_config }}"
           when: path_to_postgres_config is defined
@@ -42,7 +41,7 @@
 
         - name: Show docker compose output for Postgres
           debug:
-            var: docker_compose_output.stdout         
+            var: docker_compose_output.stdout
 
     - name: Set up and deploy Redis with Docker Compose
       block:
@@ -50,8 +49,8 @@
           ansible.builtin.file:
             path: "{{ item }}"
             state: directory
-            mode: '0755'
-            recurse: yes            
+            mode: "0755"
+            recurse: yes
           loop:
             - "{{ path_to_redis_config }}"
           when: path_to_redis_config is defined
@@ -76,8 +75,8 @@
           ansible.builtin.file:
             path: "{{ item }}"
             state: directory
-            mode: '0755'
-            recurse: yes            
+            mode: "0755"
+            recurse: yes
           loop:
             - "{{ path_to_authentik_media }}"
             - "{{ path_to_authentik_templates }}"
@@ -106,7 +105,7 @@
             redis_password: "{{ lookup('env', 'redis_password') }}"
             postgres_password: "{{ lookup('env', 'postgres_password') }}"
             authentik_secret_key: "{{ lookup('env', 'authentik_secret_key') }}"
-            path_to_authentik_media: "{{ lookup('env', 'path_to_authentik_media') }}" 
+            path_to_authentik_media: "{{ lookup('env', 'path_to_authentik_media') }}"
             path_to_authentik_templates: "{{ lookup('env', 'path_to_authentik_templates') }}"
             path_to_authentik_certs: "{{ lookup('env', 'path_to_authentik_certs') }}"
           become_user: "{{ ansible_user }}"

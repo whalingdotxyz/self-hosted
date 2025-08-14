@@ -65,7 +65,7 @@
         password: "{{ lookup('env', 'password') }}"
 
         #open-webui config
-        path_to_openweb-ui_config: "{{ lookup('env', 'path_to_open_webui_config') }}"
+        path_to_open-webui_config: "{{ lookup('env', 'path_to_open_webui_config') }}"
         openai_api_key: "{{ lookup('env', 'openai_api_key') }}"
         oauth_client_id: "{{ lookup('env', 'oauth_client_id') }}"
         oauth_client_secret: "{{ lookup('env', 'oauth_client_secret') }}"

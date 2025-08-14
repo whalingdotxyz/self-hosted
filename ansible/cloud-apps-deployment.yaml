@@ -3,16 +3,15 @@
   become: yes
 
   tasks:
-    
     - name: Ensure Git is installed
       apt:
         name: git
         state: present
       when: ansible_os_family == "Debian"
-      
+
     - name: Clone the self-hosted repository using https
       git:
-        repo: 'https://github.com/{{git_username}}/self-hosted.git'
+        repo: "https://github.com/{{git_username}}/self-hosted.git"
         dest: /home/{{ ansible_user }}/git/self-hosted
         update: yes
       become_user: "{{ ansible_user }}"
@@ -23,8 +22,8 @@
           ansible.builtin.file:
             path: "{{ item }}"
             state: directory
-            mode: '0755'
-            recurse: yes            
+            mode: "0755"
+            recurse: yes
           loop:
             - "{{ path_to_postgres_config }}"
           when: path_to_postgres_config is defined
@@ -41,7 +40,7 @@
 
         - name: Show docker compose output for Postgres
           debug:
-            var: docker_compose_output.stdout         
+            var: docker_compose_output.stdout
 
     - name: Set up and deploy Redis with Docker Compose
       block:
@@ -49,8 +48,8 @@
           ansible.builtin.file:
             path: "{{ item }}"
             state: directory
-            mode: '0755'
-            recurse: yes            
+            mode: "0755"
+            recurse: yes
           loop:
             - "{{ path_to_redis_config }}"
           when: path_to_redis_config is defined
@@ -75,10 +74,10 @@
           ansible.builtin.file:
             path: "{{ item }}"
             state: directory
-            mode: '0755'
+            mode: "0755"
             recurse: yes
             owner: "{{ ansible_user }}"
-            group: "{{ ansible_user }}"              
+            group: "{{ ansible_user }}"
           loop:
             - "{{ path_to_open_webui_config }}"
           when: path_to_open_webui_config is defined
@@ -102,10 +101,10 @@
           ansible.builtin.file:
             path: "{{ item }}"
             state: directory
-            mode: '0755'
+            mode: "0755"
             recurse: yes
             owner: "{{ ansible_user }}"
-            group: "{{ ansible_user }}"              
+            group: "{{ ansible_user }}"
           loop:
             - "{{ path_to_nextcloud_config }}"
             - "{{ path_to_nextcloud_data }}"
@@ -121,15 +120,14 @@
           shell: |
             docker exec -u postgres postgres psql -U postgres -c "CREATE DATABASE nextcloud;"
           when: "'Database not found' in db_check.stdout" # Only create the database if it doesn't exist
-          ignore_errors: yes  
-          
+          ignore_errors: yes
 
         - name: Run Docker Compose to deploy Nextcloud
           shell: docker compose up -d
           args:
             chdir: /home/{{ ansible_user }}/git/self-hosted/apps/nextcloud
           environment:
-            nextcloud_trusted_domains: "{{ lookup('env', 'nextcloud_trusted_domains') }}"           
+            nextcloud_trusted_domains: "{{ lookup('env', 'nextcloud_trusted_domains') }}"
             path_to_nextcloud_config: "{{ lookup('env', 'path_to_nextcloud_config') }}"
             path_to_nextcloud_data: "{{ lookup('env', 'path_to_nextcloud_data') }}"
           become_user: "{{ ansible_user }}"
@@ -140,10 +138,10 @@
           ansible.builtin.file:
             path: "{{ item }}"
             state: directory
-            mode: '0755'
-            recurse: yes 
+            mode: "0755"
+            recurse: yes
             owner: "{{ ansible_user }}"
-            group: "{{ ansible_user }}"            
+            group: "{{ ansible_user }}"
           loop:
             - "{{ path_to_only_office }}"
           when: path_to_only_office is defined
@@ -153,7 +151,7 @@
           args:
             chdir: /home/{{ ansible_user }}/git/self-hosted/apps/only-office
           environment:
-            path_to_onlyoffice: "{{ lookup('env', 'path_to_only_office') }}"           
+            path_to_onlyoffice: "{{ lookup('env', 'path_to_only_office') }}"
           become_user: "{{ ansible_user }}"
 
     - name: Set up Duplicati configuration directory and run Docker Compose
@@ -162,10 +160,10 @@
           ansible.builtin.file:
             path: "{{ item }}"
             state: directory
-            mode: '0755'
-            recurse: yes  
+            mode: "0755"
+            recurse: yes
             owner: "{{ ansible_user }}"
-            group: "{{ ansible_user }}"            
+            group: "{{ ansible_user }}"
           loop:
             - "{{ path_to_duplicati_config }}"
           when: path_to_duplicati_config is defined
@@ -175,12 +173,12 @@
           args:
             chdir: /home/{{ ansible_user }}/git/self-hosted/apps/duplicati
           environment:
-            path_to_duplicati_config: "{{ lookup('env', 'path_to_duplicati_config') }}" 
-            duplicati_encryption_key: "{{ lookup('env', 'duplicati_encryption_key') }}" 
+            path_to_duplicati_config: "{{ lookup('env', 'path_to_duplicati_config') }}"
+            duplicati_encryption_key: "{{ lookup('env', 'duplicati_encryption_key') }}"
             path_to_media: "{{ lookup('env', 'path_to_media') }}"
             path_to_data: "{{ lookup('env', 'path_to_data') }}"
-            path_to_apps: "{{ lookup('env', 'path_to_apps') }}"    
-            password: "{{ lookup('env', 'password') }}"  
+            path_to_apps: "{{ lookup('env', 'path_to_apps') }}"
+            password: "{{ lookup('env', 'password') }}"
           become_user: "{{ ansible_user }}"
 
     - name: Set up Ghostfolio configuration directory and run Docker Compose
@@ -190,13 +188,13 @@
             docker exec -u postgres postgres psql -U postgres -tc "SELECT 1 FROM pg_database WHERE datname = 'ghostfolio';" || echo "Database not found"
           register: db_check
           changed_when: false
-         
+
         - name: Create the Ghostfolio database in PostgreSQL
           shell: |
             docker exec -u postgres postgres psql -U postgres -c "CREATE DATABASE ghostfolio;"
           when: "'Database not found' in db_check.stdout" # Only create the database if it doesn't exist
-          ignore_errors: yes  
-          
+          ignore_errors: yes
+
         - name: Run Docker Compose to deploy Ghostfolio
           shell: docker compose up -d
           args:
@@ -204,7 +202,7 @@
           environment:
             gf_access_token: "{{ lookup('env', 'gf_access_token') }}"
             gf_jwt_secret: "{{ lookup('env', 'gf_jwt_secret') }}"
-            db_host: "{{ lookup('env', 'db_host') }}"           
+            db_host: "{{ lookup('env', 'db_host') }}"
             redis_password: "{{ lookup('env', 'redis_password') }}"
             postgres_password: "{{ lookup('env', 'postgres_password') }}"
           become_user: "{{ ansible_user }}"
@@ -215,10 +213,10 @@
           ansible.builtin.file:
             path: "{{ item }}"
             state: directory
-            mode: '0755'
-            recurse: yes  
+            mode: "0755"
+            recurse: yes
             owner: "{{ ansible_user }}"
-            group: "{{ ansible_user }}"            
+            group: "{{ ansible_user }}"
           loop:
             - "{{ path_to_homepage_config }}"
           when: path_to_homepage_config is defined
@@ -228,5 +226,27 @@
           args:
             chdir: /home/{{ ansible_user }}/git/self-hosted/apps/homepage
           environment:
-            path_to_homepage_config: "{{ lookup('env', 'path_to_homepage_config') }}" 
-          become_user: "{{ ansible_user }}"         
+            path_to_homepage_config: "{{ lookup('env', 'path_to_homepage_config') }}"
+          become_user: "{{ ansible_user }}"
+
+    - name: Set up ActualBudget configuration directory and run Docker Compose
+      block:
+        - name: Create directories for ActualBudget
+          ansible.builtin.file:
+            path: "{{ item }}"
+            state: directory
+            mode: "0755"
+            recurse: yes
+            owner: "{{ ansible_user }}"
+            group: "{{ ansible_user }}"
+          loop:
+            - "{{ path_to_actualbudget }}"
+          when: path_to_actualbudget is defined
+
+        - name: Run Docker Compose to deploy ActualBudget
+          shell: docker compose up -d
+          args:
+            chdir: /home/{{ ansible_user }}/git/self-hosted/apps/actualbudget
+          environment:
+            path_to_actualbudget: "{{ lookup('env', 'path_to_actualbudget') }}"
+          become_user: "{{ ansible_user }}"

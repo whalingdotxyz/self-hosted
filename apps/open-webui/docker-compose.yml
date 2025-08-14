@@ -14,7 +14,7 @@ services:
       - OAUTH_PROVIDER_NAME=${oauth_provider_name}
 
     volumes:
-      - "${path_to_openweb-ui_config}:/app/backend/data" # Map host path to container path
+      - "${path_to_open-webui_config}:/app/backend/data" # Map host path to container path
     ports:
       - "3000:8080" # Map port 3000 on host to port 8080 in the container
     restart: always

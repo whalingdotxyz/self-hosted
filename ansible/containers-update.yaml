@@ -10,12 +10,6 @@
         state: present
       when: ansible_os_family == "Debian"
 
-    - name: Remove existing repository if it exists
-      file:
-        path: /home/{{ ansible_user }}/git/self-hosted
-        state: absent
-      when: ansible_user is defined   # Ensure ansible_user is defined
-
     - name: Clone the self-hosted repository using https
       git:
         repo: 'https://github.com/whalingdotxyz/self-hosted.git'

@@ -12,7 +12,7 @@
 
     - name: Clone the self-hosted repository using https
       git:
-        repo: 'https://github.com/whalingdotxyz/self-hosted.git'
+        repo: "https://github.com/whalingdotxyz/self-hosted.git"
         dest: /home/{{ ansible_user }}/git/self-hosted
         update: yes
       become_user: "{{ ansible_user }}"
@@ -65,7 +65,7 @@
         password: "{{ lookup('env', 'password') }}"
 
         #open-webui config
-        path_to_open-webui_config: "{{ lookup('env', 'path_to_open_webui_config') }}"
+        path_to_open_webui_config: "{{ lookup('env', 'path_to_open_webui_config') }}"
         openai_api_key: "{{ lookup('env', 'openai_api_key') }}"
         oauth_client_id: "{{ lookup('env', 'oauth_client_id') }}"
         oauth_client_secret: "{{ lookup('env', 'oauth_client_secret') }}"
@@ -97,8 +97,6 @@
         gf_access_token: "{{ lookup('env', 'gf_access_token') }}"
         gf_jwt_secret: "{{ lookup('env', 'gf_jwt_secret') }}"
         db_host: "{{ lookup('env', 'db_host') }}" #host ip for postgres and redis
-        redis_password: "{{ lookup('env', 'redis_password') }}"
-        postgres_password: "{{ lookup('env', 'postgres_password') }}"
 
         #homepage
         path_to_homepage_config: "{{ lookup('env', 'path_to_homepage_config') }}"

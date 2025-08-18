@@ -100,6 +100,7 @@
 
         #homepage
         path_to_homepage_config: "{{ lookup('env', 'path_to_homepage_config') }}"
+        homepage_allowed_host: "{{ lookup('env', 'homepage_allowed_host') }}"
 
         #authentik
         authentik_secret_key: "{{ lookup('env', 'authentik_secret_key') }}"

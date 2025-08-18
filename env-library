@@ -1,7 +1,7 @@
         #Ansible Variables
         git_username #set Wail1ng if you want to target the original repo
         ansible_user #name of the user used to log into your server
-        
+
         #path to directories
         path_to_media: "{{ lookup('env', 'path_to_media') }}"
         path_to_data: "{{ lookup('env', 'path_to_data') }}"
@@ -40,19 +40,19 @@
         oauth_client_secret: "{{ lookup('env', 'oauth_client_secret') }}"
         oauth_provider_url: "{{ lookup('env', 'oauth_provider_url') }}"
         oauth_provider_name: "{{ lookup('env', 'oauth_provider_name') }}"
-        
+
         #nextcloud config
         path_to_nextcloud_config: "{{ lookup('env', 'path_to_nextcloud_config') }}"
         path_to_nextcloud_data: "{{ lookup('env', 'path_to_nextcloud_data') }}"
         nextcloud_trusted_domains: "{{ lookup('env', 'nextcloud_trusted_domains') }}"
         nextcloud_overwritehost: "{{ lookup('env', 'nextcloud_overwritehost') }}"
-
+        next
         #only-office config
         path_to_only_office: "{{ lookup('env', 'path_to_only_office') }}"
 
         #duplicati config
         path_to_duplicati_config: "{{ lookup('env', 'path_to_duplicati_config') }}"
-        duplicati_encryption_key: "{{ lookup('env', 'duplicati_encryption_key') }}" 
+        duplicati_encryption_key: "{{ lookup('env', 'duplicati_encryption_key') }}"
 
         #postgres config
         path_to_postgres_config: "{{ lookup('env', 'path_to_postgres_config') }}"
@@ -71,7 +71,8 @@
         postgres_password: "{{ lookup('env', 'postgres_password') }}"
 
         #homepage
-        path_to_homepage_config: "{{ lookup('env', 'path_to_homepage_config') }}" 
+        path_to_homepage_config: "{{ lookup('env', 'path_to_homepage_config') }}"
+        homepage_allowed_host: "{{ lookup('env', 'homepage_allowed_host') }}"
 
         #authentik
         authentik_secret_key: "{{ lookup('env', 'authentik_secret_key') }}"

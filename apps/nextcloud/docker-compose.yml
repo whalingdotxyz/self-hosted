@@ -7,7 +7,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Etc/UTC
-      - NEXTCLOUD_TRUSTED_DOMAINS=cloud.wailing.cc, localhost
+      - NEXTCLOUD_TRUSTED_DOMAINS=${nextcloud_trusted_domains}, localhost
     volumes:
       - "${path_to_nextcloud_config}:/config"
       - "${path_to_nextcloud_data}:/data"

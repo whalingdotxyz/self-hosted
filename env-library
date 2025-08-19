@@ -81,4 +81,4 @@
 
         #actual-budget
         path_to_actualbudget: "{{ lookup('env', 'path_to_actualbudget') }}"
-        path_to_actual-budget: "{{ lookup('env', 'path_to_actual-budget') }}"
+        path_to_actual_budget: "{{ lookup('env', 'path_to_actual_budget') }}"

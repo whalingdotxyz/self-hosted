@@ -263,13 +263,13 @@
             owner: "{{ ansible_user }}"
             group: "{{ ansible_user }}"
           loop:
-            - "{{ path_to_actual-budget }}"
-          when: path_to_actual-budget is defined
+            - "{{ path_to_actual_budget }}"
+          when: path_to_actual_budget is defined
 
         - name: Run Docker Compose to deploy Actual-Budget
           shell: docker compose up -d
           args:
             chdir: /home/{{ ansible_user }}/git/self-hosted/apps/actual-budget
           environment:
-            path_to_actual-budget: "{{ lookup('env', 'path_to_actual-budget') }}"
+            path_to_actual_budget: "{{ lookup('env', 'path_to_actual_budget') }}"
           become_user: "{{ ansible_user }}"

@@ -107,6 +107,10 @@
         path_to_authentik_media: "{{ lookup('env', 'path_to_authentik_media') }}"
         path_to_authentik_templates: "{{ lookup('env', 'path_to_authentik_templates') }}"
 
+        #actual-budget
+        path_to_actualbudget: "{{ lookup('env', 'path_to_actualbudget') }}"
+        path_to_actual-budget: "{{ lookup('env', 'path_to_actual-budget') }}"
+
       become_user: "{{ ansible_user }}"
       loop: "{{ running_containers.stdout_lines }}"
 

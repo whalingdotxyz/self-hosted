@@ -227,6 +227,7 @@
             chdir: /home/{{ ansible_user }}/git/self-hosted/apps/homepage
           environment:
             path_to_homepage_config: "{{ lookup('env', 'path_to_homepage_config') }}"
+            homepage_allowed_host: "{{ lookup('env', 'homepage_allowed_host') }}"
           become_user: "{{ ansible_user }}"
 
     - name: Set up ActualBudget configuration directory and run Docker Compose
@@ -251,7 +252,7 @@
             path_to_actualbudget: "{{ lookup('env', 'path_to_actualbudget') }}"
           become_user: "{{ ansible_user }}"
 
-    - name: Set up ActualBudget configuration directory and run Docker Compose
+    - name: Set up Actual-Budget configuration directory and run Docker Compose
       block:
         - name: Create directories for Actual-Budget
           ansible.builtin.file:
@@ -270,5 +271,5 @@
           args:
             chdir: /home/{{ ansible_user }}/git/self-hosted/apps/actual-budget
           environment:
-            path_to_actualbudget: "{{ lookup('env', 'path_to_actual-budget') }}"
+            path_to_actual-budget: "{{ lookup('env', 'path_to_actual-budget') }}"
           become_user: "{{ ansible_user }}"
